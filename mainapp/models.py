@@ -1,4 +1,3 @@
-import json
 import ast
 from django.db import models
 from django.urls import reverse
@@ -6,11 +5,11 @@ from django.urls import reverse
 
 class Order(models.Model):
     class Meta:
-        ordering = ('id', )
-        verbose_name = 'Заказ'
+        ordering = ('-id', )
+        verbose_name = 'Order'
 
     table_number = models.IntegerField()
-    items = models.CharField(max_length=255)  # Используем JSONField для хранения списка блюд
+    items = models.CharField(max_length=255)
     total_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     status = models.CharField(
         max_length=20,

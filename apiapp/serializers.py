@@ -4,5 +4,5 @@ from mainapp.models import Order
 
 class OrderSerializer(ModelSerializer):
     class Meta:
-        model = Order
+        model: Order = Order
         fields = '__all__'
