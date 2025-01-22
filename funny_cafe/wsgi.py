@@ -1,5 +1,5 @@
 """
-WSGI config for funny_cofe project.
+WSGI config for funny_cafe project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'funny_cofe.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'funny_cafe.settings')
 
 application = get_wsgi_application()

@@ -1,0 +1,14 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Вы действительно хотите удалить заказ № {{ order.id }}, стол № {{ order.table_number }}</p>
+        <p>Список заказа: {{ order.items }}</p>
+        {{ form }}
+        <button type="submit" value="">Удалить</button>
+    </form>
+
+
+{% endblock %}

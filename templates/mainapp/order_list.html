@@ -1,0 +1,37 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Номер стола</th>
+            <th>Блюда</th>
+            <th>Общая стоимость</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.table_number }}</td>
+            <td>{{ order.items }}</td>
+            <td>{{ order.total_price }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>
+                <a href="{% url 'update_order' order.id %}">Изменить заказ</a>
+                <a href="{% url 'delete_order' order.id %}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{% url 'add_order' %}">Добавить заказ</a>
+    <a href="{% url 'revenue' %}">Прибыль </a>
+
+    <form method="get" action="{% url 'search_orders' %}">
+        <input type="text" name="q" placeholder="Поиск">
+        <button type="submit">Искать</button>
+    </form>
+
+{% endblock %}
