@@ -4,6 +4,7 @@ from django.urls import reverse
 
 
 class Order(models.Model):
+    '''Класс модели Order для реализации хранения данных в БД'''
     class Meta:
         ordering = ('-id', )
         verbose_name = 'Order'
@@ -22,12 +23,14 @@ class Order(models.Model):
     )
 
     def calculate_total_price(self):
+        '''Функция для подсчета стоимости заказа с учетом количества блюд'''
         total = 0
-        items_ = ast.literal_eval(self.items)
+        items_: list[dict] = ast.literal_eval(self.items)  # преобразую данные со строкового типа в список словарей 
 
         for item in items_:
             total += item['price'] * item.get('count', 1)  # учитываем количество
         self.total_price = total
 
     def get_absolute_url(self):
+        '''Переопределяю метод редиректа после успешного создания модели'''
         return reverse('order_list')
