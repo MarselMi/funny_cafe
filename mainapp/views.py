@@ -21,9 +21,9 @@ class CreateOrder(CreateView):
         :return:
         Если запрос валиден, перед сохранением производится подсчет суммы заказа
         '''
-        instance: Any = form.save(commit=False)
-        instance.calculate_total_price()
-        instance.save()
+        instance: Any = form.save(commit=False)  # commit=False, обьект создается но не сохраняется для выполнения дальнейших действий
+        instance.calculate_total_price()  # подсчет итоговой цены заказа 
+        instance.save()  # сохранение созданного обьекта
         return redirect('order_list')
 
     def get_context_data(self, **kwargs):
