@@ -1,4 +1,4 @@
-version: "3.9"
+
 
 services:
   db:
@@ -6,7 +6,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_USER: postgrest
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: funny_cafe
     ports:
@@ -25,7 +25,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgrest:admin@db:5432/funny_cafe
+      DATABASE_URL: postgres://postgres:admin@db:5432/funny_cafe
     restart: unless-stopped
 
 volumes:

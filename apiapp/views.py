@@ -24,11 +24,22 @@ class OrderListApiView(viewsets.ModelViewSet):
         Create a model instance.
         '''
         table_number: str = self.request.data.get('table_number')
-        items: str = self.request.data.get('items').strip()
+        items: str = self.request.data.get('items')
         total: int = 0
-        items_: list[dict[str:str] | dict[str:int]] = ast.literal_eval(items)
-        for item in items_:
-            total += item['price'] * item.get('count', 1)  # учитываем количество
+        if not table_number or not items:
+            return Response(
+                {'error': 'Не заполнены обязательные поля'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            items_: list[dict[str:str] | dict[str:int]] = ast.literal_eval(items.strip())
+            for item in items_:
+                total += item['price'] * item.get('count', 1)  # учитываем количество
+        except:
+            return Response(
+                {'error': 'Неверный формат поля items'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         serializer: Any = self.get_serializer(data={'items': items, 'table_number': table_number, 'total_price': total})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)

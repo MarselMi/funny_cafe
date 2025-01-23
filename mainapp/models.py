@@ -9,7 +9,7 @@ class Order(models.Model):
         ordering = ('-id', )
         verbose_name = 'Order'
 
-    table_number = models.IntegerField()
+    table_number = models.PositiveSmallIntegerField()
     items = models.CharField(max_length=255)
     total_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     status = models.CharField(

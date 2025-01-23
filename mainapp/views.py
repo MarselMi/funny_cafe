@@ -21,8 +21,13 @@ class CreateOrder(CreateView):
         :return:
         Если запрос валиден, перед сохранением производится подсчет суммы заказа
         '''
+
         instance: Any = form.save(commit=False)  # commit=False, обьект создается но не сохраняется для выполнения дальнейших действий
-        instance.calculate_total_price()  # подсчет итоговой цены заказа 
+        try:
+            instance.calculate_total_price()  # подсчет итоговой цены заказа
+        except Exception as e:
+            form.add_error(None, f"Ошибка в отправке формы! Неверный формат списка заказов!") #Ошибка для всей формы
+            return self.form_invalid(form)
         instance.save()  # сохранение созданного обьекта
         return redirect('order_list')
 
@@ -69,9 +74,13 @@ class UpdateOrderView(UpdateView):
         :return:
         Если запрос валиден, перед сохранением производится подсчет суммы заказа
         '''
-        instance = form.save(commit=False)
-        instance.calculate_total_price()
-        instance.save()
+        instance: Any = form.save(commit=False)  # commit=False, обьект создается но не сохраняется для выполнения дальнейших действий
+        try:
+            instance.calculate_total_price()  # подсчет итоговой цены заказа
+        except Exception as e:
+            form.add_error(None, f"Ошибка в отправке формы! Неверный формат списка заказов!") #Ошибка для всей формы
+            return self.form_invalid(form)
+        instance.save()  # сохранение созданного обьекта
         return redirect('order_list')
 
     def get_context_data(self, **kwargs):

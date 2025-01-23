@@ -59,24 +59,24 @@ class OrderApiTest(APITestCase):
         Order.objects.create(table_number=2, items='[{"name": "Burger", "price": 5}]', total_price=5)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 2)
+        self.assertEqual(len(response.json().get('results')), 2)
 
     def test_filter_orders_by_table_number(self):
         '''Проверяет фильтрацию заказов по номеру стола.'''
         Order.objects.create(table_number=1, items='[{"name": "Pizza", "price": 10}]', total_price=10)
-        Order.objects.create(table_number=2, items='[{"name": "Burger", "price": 5}]', total_price=5)
-        url = '/api-v1/orders/?table_number=1'
+        Order.objects.create(table_number=21, items='[{"name": "Burger", "price": 5}]', total_price=5)
+        url = '/api-v1/orders/?table_number=21'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['table_number'], 1)
+        self.assertEqual(len(response.json().get('results')), 1)
+        self.assertEqual(response.json().get('results')[0]['table_number'], 21)
 
     def test_filter_orders_by_status(self):
         '''Проверяет фильтрацию заказов по статусу.'''
         Order.objects.create(table_number=1, items='[{"name": "Pizza", "price": 10}]', total_price=10, status='pending')
-        Order.objects.create(table_number=2, items='[{"name": "Burger", "price": 5}]', total_price=5, status='ready')
-        url = '/api-v1/orders/?status=pending'
+        Order.objects.create(table_number=2, items='[{"name": "Burger", "price": 5}]', total_price=5, status='paid')
+        url = '/api-v1/orders/?status=paid'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['status'], 'pending')
+        self.assertEqual(len(response.json().get('results')), 1)
+        self.assertEqual(response.json().get('results')[0]['status'], 'paid')
