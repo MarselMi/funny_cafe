@@ -4,7 +4,7 @@ from mainapp.models import Order
 
 
 class CreateOrderForm(forms.ModelForm):
-
+    '''Форма для создания модели Заказа (Order) '''
     class Meta:
         model = Order
         fields = ['table_number', 'items',]
@@ -22,7 +22,7 @@ class CreateOrderForm(forms.ModelForm):
 
 
 class UpdateOrder(forms.ModelForm):
-
+    '''Форма для обновления статуса и состава Заказа (Order) '''
     class Meta:
         model = Order
         fields = ['status', 'items',]
