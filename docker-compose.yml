@@ -19,7 +19,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgres://postgres:admin@db:5432/funny_cafe
+      - DATABASE_URL=postgres://postgres:admin@db:5431/funny_cafe
     volumes:
       - ./myproject:/app
 
