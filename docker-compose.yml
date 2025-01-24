@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 services:
   db:
     image: postgres:17
@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: funny_cafe
     ports:
-      - "5431:5431"
+      - "5432:5432"
     restart: unless-stopped
 
   django:
@@ -19,7 +19,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgres://postgres:admin@db:5431/funny_cafe
+      - DATABASE_URL=postgres://postgres:admin@db:5432/funny_cafe
     volumes:
       - ./myproject:/app
 
